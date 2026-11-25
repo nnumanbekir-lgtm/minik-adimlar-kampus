@@ -464,13 +464,13 @@ function cardIn(){card.classList.add('live');if(!M)return;
   M.animate(card.querySelectorAll('.no,h2,p,.facts li,.gbtn'),{opacity:[0,1],y:[16,0]},{delay:M.stagger(.07,{startDelay:.12}),duration:.55,ease:EOUT})}
 function cardOut(){if(!card.classList.contains('live'))return;card.classList.remove('live');if(M)M.animate(card,{opacity:0,y:20,scale:.98},{duration:.3,ease:'easeIn'})}
 function outroIn(){outro.classList.add('live');if(!M)return;M.animate(outro,{opacity:1},{duration:.01});
-  M.animate(outro.children,{opacity:[0,1],y:[30,0]},{delay:M.stagger(.12),type:'spring',stiffness:140,damping:20})}
+  M.animate(Array.from(outro.children),{opacity:[0,1],y:[30,0]},{delay:M.stagger(.12),type:'spring',stiffness:140,damping:20})}
 function outroOut(){if(!outro.classList.contains('live'))return;outro.classList.remove('live');if(M)M.animate(outro,{opacity:0},{duration:.3})}
 function setCnt(v){var c=$('cnt');if(c.textContent===v)return;c.textContent=v;if(M&&v)M.animate(c,{opacity:[0,1],y:[10,0]},{type:'spring',stiffness:300,damping:20})}
 function fmBoot(){if(!M)return;
   /* the building drops into place, then the title, then the room pins pop in one by one */
   M.animate(document.querySelector('.boxin'),{opacity:[0,1],scale:[1.22,1],y:[-50,0]},{duration:2.3,ease:[.65,0,.25,1]});
-  M.animate(intro.children,{opacity:[0,1],y:[34,0]},{delay:M.stagger(.13,{startDelay:1.0}),type:'spring',stiffness:120,damping:18});
+  M.animate(Array.from(intro.children),{opacity:[0,1],y:[34,0]},{delay:M.stagger(.13,{startDelay:1.0}),type:'spring',stiffness:120,damping:18});
   M.animate(document.querySelectorAll('.hot .dot'),{opacity:[0,1],scale:[0,1]},{delay:M.stagger(.12,{startDelay:1.7}),type:'spring',stiffness:420,damping:14});
   M.animate(document.querySelectorAll('.hot .lab'),{opacity:[0,1],x:[-10,0]},{delay:M.stagger(.12,{startDelay:1.85}),type:'spring',stiffness:260,damping:20});
   /* springy press feedback on every button */
