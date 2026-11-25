@@ -15,13 +15,13 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="https://ai-thumbnails.s3.amazonaws.com/editor/f1dc3d8b-dca1-4bf9-be1c-818d551c4499/7abfaa51-e8b6-483c-b129-43505bdbf13e.jpeg">
 <style>
 :root{
-  --bg:#f8ecd8;--ink:#1f2a22;--body:#4c5249;--soft:#867f70;--line:rgba(31,42,34,.12);
+  --bg:#f8ecd8;--ink:#1f2a22;--body:#4c5249;--soft:#6b6457;--line:rgba(31,42,34,.12);
   --green:#2f7d4f;--green-d:#1f5c38;--sun:#f3bd3c;--coral:#e9775f;
-  --fh:'Fraunces',Georgia,serif;--fb:'Inter',system-ui,sans-serif;
+  --fh:'DM Sans',system-ui,sans-serif;--fb:'DM Sans',system-ui,sans-serif;
   --ease:cubic-bezier(.65,0,.25,1);
 }
 *{box-sizing:border-box}
@@ -29,13 +29,14 @@
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.65 var(--fb);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 ::selection{background:var(--sun);color:var(--ink)}
 :focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:6px}
+.card :focus-visible,.ctl :focus-visible,.rail :focus-visible,.hot:focus-visible{outline:3px solid #ffc23d;outline-offset:3px}
 input,select{caret-color:var(--green)}
 .ph{background:#ffe15a;color:var(--ink);border-radius:3px;padding:0 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .strip{background:var(--ink);color:#eef0e8;font:500 13px/1.4 var(--fb);padding:9px 16px;text-align:center;position:relative;z-index:60}
 .strip b{color:var(--sun)}
 
 /* ---------- the tour ---------- */
-.tour{position:relative;height:100vh;height:100svh}
+.tour{position:relative;height:calc(100vh - var(--sh,0px));height:calc(100svh - var(--sh,0px))}
 .stage{position:relative;height:100%;overflow:hidden;background:radial-gradient(ellipse 75% 70% at 60% 50%,#fcf3e3 0,var(--bg) 72%)}
 .box{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
 .boxin{position:absolute;inset:0;animation:arrive 2.4s var(--ease) both}
@@ -55,7 +56,7 @@ input,select{caret-color:var(--green)}
 
 .top{position:absolute;top:14px;left:clamp(14px,3vw,36px);right:clamp(14px,3vw,36px);z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{background:rgba(255,253,248,.92);border-radius:16px;padding:9px 16px;text-decoration:none;color:var(--ink)}
-.brand b{display:block;font:400 20px/1.05 var(--fh)}
+.brand b{display:block;font:600 19px/1.05 var(--fh)}
 .brand small{display:block;font:500 10px/1.4 var(--fb);letter-spacing:.16em;text-transform:uppercase;color:var(--soft);margin-top:3px}
 .pill{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 22px;border-radius:999px;background:var(--ink);color:#fff;font:500 14.5px var(--fb);border:0;cursor:pointer;transition:transform .2s,background .2s;text-decoration:none;position:relative}
 .pill:hover{transform:translateY(-1px);background:#2e3b31}
@@ -70,9 +71,9 @@ input,select{caret-color:var(--green)}
 @keyframes rise{from{opacity:0;transform:translateY(22px)}}
 .kick{white-space:nowrap;font:600 11px/1 var(--fb);letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin:0 0 18px;display:flex;align-items:center;gap:12px}
 .kick::after{content:"";height:1px;width:50px;background:currentColor;opacity:.45}
-h1{font:300 clamp(44px,5.4vw,84px)/.96 var(--fh);letter-spacing:-.03em;margin:0 0 20px}
+h1{font:600 clamp(44px,5.2vw,80px)/.98 var(--fh);letter-spacing:-.045em;margin:0 0 20px}
 h1 i{color:var(--green)}
-.intro p{font:300 clamp(17px,1.4vw,20px)/1.5 var(--fh);color:var(--body);margin:0 0 26px;max-width:32ch}
+.intro p{font:400 clamp(17px,1.4vw,20px)/1.5 var(--fb);color:var(--body);margin:0 0 26px;max-width:32ch}
 .acts{display:flex;gap:10px;flex-wrap:wrap}
 .play{min-height:56px;padding:0 26px 0 10px;font-size:16px;background:var(--green-d)}
 .play:hover{background:var(--green)}
@@ -88,7 +89,7 @@ h1 i{color:var(--green)}
   background:rgba(20,25,20,.74);border:1px solid rgba(255,255,255,.18);border-radius:22px;padding:24px 24px 20px}
 .card.live{pointer-events:auto;opacity:1;transform:none}
 .card .no{font:600 11px var(--fb);letter-spacing:.2em;text-transform:uppercase;color:#cfe8d6}
-.card h2{font:300 46px/1 var(--fh);letter-spacing:-.02em;margin:8px 0 10px}
+.card h2{font:500 46px/1 var(--fh);letter-spacing:-.035em;margin:8px 0 10px}
 .card p{margin:0 0 12px;color:#eef1ea;font-size:15px}
 .facts{list-style:none;margin:0 0 16px;padding:0}
 .facts li{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-top:1px solid rgba(255,255,255,.18);font-size:14px;color:#e6eae2}
@@ -96,9 +97,9 @@ h1 i{color:var(--green)}
 .gbtn{min-height:44px;padding:0 18px;border-radius:999px;border:0;background:#fff;color:var(--ink);font:500 14px var(--fb);cursor:pointer}
 .gbtn:hover{background:#f1eee6}
 
-.rail{position:absolute;z-index:12;right:clamp(14px,2.4vw,34px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px;opacity:0;transition:opacity .4s}
+.rail{position:absolute;z-index:12;right:clamp(14px,2.4vw,34px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:0;opacity:0;transition:opacity .4s}
 .rail.on{opacity:1}
-.rail button{display:flex;align-items:center;justify-content:flex-end;gap:10px;background:none;border:0;cursor:pointer;min-height:34px;font:500 12.5px var(--fb);color:rgba(255,255,255,.75);text-shadow:0 1px 8px rgba(0,0,0,.4);padding:0}
+.rail button{display:flex;align-items:center;justify-content:flex-end;gap:10px;background:none;border:0;cursor:pointer;min-height:44px;font:500 12.5px var(--fb);color:rgba(255,255,255,.75);text-shadow:0 1px 8px rgba(0,0,0,.4);padding:0}
 .rail button i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.55);transition:all .3s}
 .rail button.on{color:#fff}
 .rail button.on i{background:var(--sun);transform:scale(1.5)}
@@ -112,12 +113,16 @@ h1 i{color:var(--green)}
 .ctl .n{font:500 12.5px var(--fb);letter-spacing:.08em;padding:0 6px;min-width:52px;text-align:center}
 .repr{position:absolute;z-index:11;right:clamp(14px,2.4vw,34px);bottom:72px;font-size:11.5px;color:var(--soft);margin:0}
 
+.more{white-space:nowrap;position:absolute;z-index:11;left:50%;bottom:16px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;font:500 13px var(--fb);color:var(--body);text-decoration:none;transition:opacity .4s,background .2s}
+.more:hover{background:rgba(31,42,34,.06)}
+.more svg{width:12px;height:12px}
+.more.off{opacity:0;pointer-events:none}
 .outro{position:absolute;z-index:10;left:clamp(18px,4vw,64px);top:50%;transform:translateY(-50%);width:min(440px,40vw);opacity:0;pointer-events:none;transition:opacity .7s ease}
 .outro.live{pointer-events:auto;opacity:1}
 .intro.gone{opacity:0;visibility:hidden}
-.outro h2{font:300 clamp(40px,4.6vw,70px)/1 var(--fh);letter-spacing:-.02em;margin:0 0 16px}
+.outro h2{font:500 clamp(40px,4.6vw,70px)/1 var(--fh);letter-spacing:-.02em;margin:0 0 16px}
 .outro h2 i{color:var(--green)}
-.outro p{font:300 19px/1.5 var(--fh);color:var(--body);margin:0 0 24px}
+.outro p{font:400 19px/1.5 var(--fb);color:var(--body);margin:0 0 24px}
 
 @media (max-width:899px){
   .rail{display:none}
@@ -141,19 +146,19 @@ h1 i{color:var(--green)}
 
 /* ---------- below the tour ---------- */
 section.band{padding:96px clamp(18px,3vw,40px) 70px;max-width:1240px;margin:0 auto}
-.band h3{font:300 clamp(34px,4vw,54px)/1.02 var(--fh);letter-spacing:-.02em;margin:0 0 12px}
+.band h3{font:500 clamp(34px,4vw,54px)/1.02 var(--fh);letter-spacing:-.02em;margin:0 0 12px}
 .band h3 i{color:var(--green)}
-.band .lede{font:300 19px/1.55 var(--fh);color:var(--body);max-width:52ch;margin:0 0 34px}
+.band .lede{font:400 19px/1.55 var(--fb);color:var(--body);max-width:52ch;margin:0 0 34px}
 .groups{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
 .groups div{padding:22px 20px 10px 0}
 .groups div+div{padding-left:20px;border-left:1px solid var(--line)}
 .groups small{font:600 11px var(--fb);letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
-.groups b{display:block;font:300 34px/1.1 var(--fh);margin:6px 0}
+.groups b{display:block;font:500 34px/1.1 var(--fh);margin:6px 0}
 .groups p{margin:0;color:var(--body);font-size:15px}
 @media (max-width:800px){.groups{grid-template-columns:1fr 1fr}.groups div:nth-child(3){padding-left:0;border-left:0}}
 .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:10px}
 .trio div{border-top:2px solid var(--ink);padding-top:16px}
-.trio b{display:block;font:400 24px/1.2 var(--fh);margin-bottom:6px}
+.trio b{display:block;font:600 21px/1.25 var(--fh);margin-bottom:6px}
 .trio p{margin:0;color:var(--body)}
 @media (max-width:800px){.trio{grid-template-columns:1fr}}
 footer{border-top:1px solid var(--line);padding:26px clamp(18px,3vw,40px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px;color:var(--soft)}
@@ -167,7 +172,7 @@ footer{border-top:1px solid var(--line);padding:26px clamp(18px,3vw,40px);displa
 .pband{display:flex;justify-content:space-between;align-items:center;margin:-24px -26px 20px;padding:14px 26px;background:var(--green);color:#fff;font:600 11px var(--fb);letter-spacing:.2em;text-transform:uppercase}
 .pband span:last-child{opacity:.75}
 .route{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-bottom:18px}
-.route b{display:block;font:300 34px/1 var(--fh)}
+.route b{display:block;font:500 34px/1 var(--fh)}
 .route small{font:500 11px var(--fb);letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
 .route .line{flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--soft) 0 6px,transparent 6px 12px);margin:0 6px 12px;position:relative}
 .route .line::after{content:"";position:absolute;left:50%;top:-6px;width:12px;height:12px;border-radius:50%;background:var(--sun);transform:translateX(-50%)}
@@ -182,11 +187,14 @@ footer{border-top:1px solid var(--line);padding:26px clamp(18px,3vw,40px);displa
 .stub::before,.stub::after{content:"";position:absolute;left:-13px;width:24px;height:24px;border-radius:50%;background:rgba(20,22,18,.55)}
 .stub::before{top:-12px}.stub::after{bottom:-12px}
 .stub small{display:block;font:600 10px var(--fb);letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
-.stub b{display:block;font:300 24px/1.15 var(--fh);margin:2px 0 12px;min-height:28px;word-break:break-word}
+.stub b{display:block;font:500 24px/1.15 var(--fh);margin:2px 0 12px;min-height:28px;word-break:break-word}
 .bars{height:54px;margin:8px 0 12px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 9px,var(--ink) 9px 12px,transparent 12px 14px);opacity:.85;border-radius:2px}
 .send{width:100%;min-height:48px;border-radius:999px;border:0;background:var(--ink);color:#fff;font:500 14.5px var(--fb);cursor:pointer}
 .send:hover{background:#2e3b31}
-.pclose{position:fixed;top:10px;right:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;font-size:20px;cursor:pointer;z-index:2}
+.pclose{position:fixed;top:10px;right:12px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;font-size:20px;cursor:pointer;z-index:2}
+.err{display:block;min-height:0;font:500 12px/1.4 var(--fb);letter-spacing:0;text-transform:none;color:#b42318}
+.err:empty{display:none}
+.pf input[aria-invalid=true]{border-bottom-color:#b42318}
 .pmsg{margin-top:10px;font-size:13px;color:var(--green-d)}
 @media (max-width:700px){.passwrap{place-items:start center;padding:56px 12px 16px}.pass{grid-template-columns:1fr}.stub{border-left:0;border-top:2px dashed rgba(31,42,34,.25)}.stub::before,.stub::after{display:none}.route b{font-size:26px}.pf{grid-template-columns:1fr}}
 
@@ -248,6 +256,7 @@ footer{border-top:1px solid var(--line);padding:26px clamp(18px,3vw,40px);displa
     <nav class="rail" id="rail" aria-label="Odalar"></nav>
     <div class="ctl" id="ctl"><button type="button" id="prev" aria-label="Önceki oda"><svg viewBox="0 0 12 12"><path d="M8 1L3 6l5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><button type="button" id="pp" aria-label="Duraklat"></button><span class="n" id="cnt"></span><button type="button" id="next" aria-label="Sonraki oda"><svg viewBox="0 0 12 12"><path d="M4 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
     <p class="repr">Temsilî 3D görseller</p>
+    <a class="more" id="more" href="#gruplar">Yaş grupları, güvenlik ve sorular<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
   </div>
 </section>
 
@@ -291,13 +300,13 @@ footer{border-top:1px solid var(--line);padding:26px clamp(18px,3vw,40px);displa
         <div style="text-align:right"><small>Nereye</small><b>Okulumuz</b></div>
       </div>
       <div class="pf">
-        <label>Veli adı<input name="veli" autocomplete="name"></label>
-        <label>Telefon<input name="tel" type="tel" autocomplete="tel"></label>
+        <label>Veli adı<input name="veli" autocomplete="name" aria-describedby="e-veli"><span class="err" id="e-veli"></span></label>
+        <label>Telefon<input name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="05xx xxx xx xx" aria-describedby="e-tel"><span class="err" id="e-tel"></span></label>
         <label>Çocuğun adı<input name="cocuk"></label>
-        <label>Yaşı (ay)<input name="ay" inputmode="numeric" placeholder="ör. 30"></label>
+        <label>Yaşı (ay)<input name="ay" inputmode="numeric" placeholder="ör. 30" aria-describedby="e-ay"><span class="err" id="e-ay"></span></label>
         <label>Gün<select name="gun" id="gun"></select></label>
         <label>Saat<select name="saat"><option>10.00</option><option>14.00</option><option>16.00</option></select></label>
-        <label class="full kv"><input type="checkbox" name="kvkk"> <span>Bilgilerimin bu ziyaret talebi için kullanılmasını onaylıyorum. <span class="ph">KVKK aydınlatma metni</span></span></label>
+        <span class="err full" id="e-kvkk"></span><label class="full kv"><input type="checkbox" name="kvkk" aria-describedby="e-kvkk"> <span>Bilgilerimin bu ziyaret talebi için kullanılmasını onaylıyorum. <span class="ph">KVKK aydınlatma metni</span></span></label>
       </div>
     </div>
     <div class="stub">
@@ -357,6 +366,7 @@ R.forEach(function(r,i){
 /* geometry */
 var vw,vh,W,H,mob;
 function layout(){
+  document.documentElement.style.setProperty('--sh',document.querySelector('.strip').offsetHeight+'px');
   vw=stage.clientWidth;vh=stage.clientHeight;mob=vw<900&&vw/vh<1.2;
   W=mob?(vw/vh>.75?vw*1.25:vw*1.6):Math.max(vw,vh*16/9);H=W*9/16;
   box.style.width=W+'px';box.style.height=H+'px';
@@ -393,14 +403,14 @@ function goSeg(n){
   from=cur||introPose();
   var s0=SEG[si];prevInt=(s0.k==='room'&&R[s0.i].img)?s0.i:-1;prevA=prevInt>=0?curIntA:0;
   si=n;st=0;cardOut();
-  var s1=SEG[si];if(s1.k==='room')fill(s1.i);
+  var s1=SEG[si];
   intro.classList.toggle('gone',si!==0);outroOut();
   [].forEach.call(rail.children,function(b,k){b.className=(s1.k==='room'&&k===s1.i)?'on':''});
   setCnt(s1.k==='room'?String(s1.i+1).padStart(2,'0')+' / '+String(N).padStart(2,'0'):s1.k==='outro'?'Son':'');
-  ctl.classList.toggle('on',si>0);rail.classList.toggle('on',s1.k==='room');
+  ctl.classList.toggle('on',si>0);$('more').classList.toggle('off',s1.k==='room');rail.classList.toggle('on',s1.k==='room');
   if(reduce)st=TR;
 }
-function setPlay(v){playing=v;$('pp').innerHTML=v?'<svg viewBox="0 0 12 12"><path d="M1.5 0h3v12h-3zM7.5 0h3v12h-3z"/></svg>':'<svg viewBox="0 0 12 14"><path d="M1 0l11 7-11 7z"/></svg>';
+function setPlay(v){playing=v;card.setAttribute('aria-live',v?'off':'polite');$('pp').innerHTML=v?'<svg viewBox="0 0 12 12"><path d="M1.5 0h3v12h-3zM7.5 0h3v12h-3z"/></svg>':'<svg viewBox="0 0 12 14"><path d="M1 0l11 7-11 7z"/></svg>';
   $('pp').setAttribute('aria-label',v?'Turu duraklatın':'Turu sürdürün')}
 function frame(now){
   var dt=last?Math.min(.05,(now-last)/1000):0;last=now;
@@ -415,7 +425,7 @@ function frame(now){
     hotA=from.s<1.3?1-cl(st/.8):0;
     intA=r.img?es(cl((st-TR+.25)/FI)):0;
     kb=1.12-.12*cl((st-TR)/(FI+HOLD));
-    if(st>TR+.2&&!card.classList.contains('live'))cardIn();
+    if(st>TR+.2&&!card.classList.contains('live')){fill(sg.i);cardIn()}
     prog=(sg.i+cl(st/(TR+FI+HOLD)))/N;
     if(st>=TR+FI+HOLD)goSeg(si+1);
   } else {
@@ -452,6 +462,7 @@ addEventListener('keydown',function(e){if(e.target.closest&&e.target.closest('in
   if(e.key==='ArrowRight')goSeg(Math.min(SEG.length-1,si+1));if(e.key==='ArrowLeft'&&si>1)goSeg(si-1)});
 if('IntersectionObserver' in window)new IntersectionObserver(function(en){inView=en[0].intersectionRatio>.35},{threshold:[0,.35,.7]}).observe(stage);
 addEventListener('resize',layout);
+stage.addEventListener('focusin',function(e){try{if(e.target.matches(':focus-visible')&&playing&&si>0)setPlay(false)}catch(_){}});
 
 /* preload + decode room photos so the first fade never stutters */
 imgs.forEach(function(im){if(im&&im.decode)im.decode().catch(function(){})});
@@ -479,7 +490,7 @@ function fmBoot(){if(!M)return;
     ['pointerup','pointerleave','pointercancel'].forEach(function(ev){b.addEventListener(ev,function(){M.animate(b,{scale:1},{type:'spring',stiffness:500,damping:15})})})});
   /* sections below the tour rise in as they scroll into view */
   document.querySelectorAll('section.band').forEach(function(sec){
-    M.inView(sec,function(){M.animate(sec.querySelectorAll('h3,.lede,.groups>div,.trio>div'),{opacity:[0,1],y:[36,0]},{delay:M.stagger(.09),type:'spring',stiffness:110,damping:20})},{amount:.25})});
+    M.inView(sec,function(){M.animate(sec.querySelectorAll('h3,.lede,.groups>div,.trio>div'),{opacity:[0,1],y:[28,0],scale:[.94,1]},{delay:M.stagger(.07),type:'spring',stiffness:180,damping:14})},{amount:.25})});
 }
 
 /* visit pass */
@@ -497,10 +508,19 @@ function closePass(){pw.classList.remove('on');pw.setAttribute('aria-hidden','tr
 document.querySelectorAll('[data-pass]').forEach(function(b){b.addEventListener('click',openPass)});
 $('pclose').onclick=closePass;pw.addEventListener('click',function(e){if(e.target===pw)closePass()});
 addEventListener('keydown',function(e){if(e.key==='Escape'&&pw.classList.contains('on'))closePass()});
-pf.addEventListener('submit',function(e){e.preventDefault();var m=$('pmsg');m.hidden=false;
- if(!pf.veli.value.trim()||!pf.tel.value.trim()){m.textContent='Lütfen adınızı ve telefonunuzu yazın.';return}
- if(!pf.kvkk.checked){m.textContent='Devam etmek için onay kutusunu işaretleyin.';return}
+function check(name){var v=(pf[name].type==='checkbox')?pf[name].checked:pf[name].value.trim(),msg='';
+  if(name==='veli'&&!v)msg='Adınızı yazın.';
+  if(name==='tel'){var d=v.replace(/\D/g,'');if(!d)msg='Telefonunuzu yazın; size buradan döneceğiz.';else if(!/^0?5\d{9}$/.test(d))msg='Cep numarası 05 ile başlayan 11 hane olmalı.'}
+  if(name==='ay'&&v!==''){var n=+v;if(isNaN(n)||n<0||n%1)msg='Ayı rakamla yazın, örneğin 30.';else if(n>66)msg='Okulumuz 0–66 ay arası çocuklara hizmet veriyor.'}
+  if(name==='kvkk'&&!v)msg='Devam etmek için onay kutusunu işaretleyin.';
+  $('e-'+name).textContent=msg;if(pf[name].type!=='checkbox')pf[name].setAttribute('aria-invalid',msg?'true':'false');return !msg}
+['veli','tel','ay'].forEach(function(n){pf[n].addEventListener('blur',function(){if(pf[n].value.trim()||$('e-'+n).textContent)check(n)})});
+pf.kvkk.addEventListener('change',function(){check('kvkk')});
+pf.addEventListener('submit',function(e){e.preventDefault();var m=$('pmsg');m.hidden=true;
+ var bad=['veli','tel','ay','kvkk'].filter(function(n){return !check(n)});
+ if(bad.length){pf[bad[0]].focus();return}
  var t='Merhaba, ziyaret kartı:\nVeli: '+pf.veli.value+'\nTelefon: '+pf.tel.value+'\nÇocuk: '+pf.cocuk.value+' ('+pf.ay.value+' ay, '+grp(pf.ay.value)+')\nZiyaret: '+pf.gun.value+' '+pf.saat.value;
+ m.hidden=false;
  if(!WHATSAPP){m.textContent='Önizleme: Yayındaki sitede bu kart doğrudan okulun WhatsApp hattına gider.';return}
  location.href='https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(t)});
 </script>
