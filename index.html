@@ -190,6 +190,15 @@ footer{border-top:1px solid var(--line);padding:26px clamp(18px,3vw,40px);displa
 .pmsg{margin-top:10px;font-size:13px;color:var(--green-d)}
 @media (max-width:700px){.passwrap{place-items:start center;padding:56px 12px 16px}.pass{grid-template-columns:1fr}.stub{border-left:0;border-top:2px dashed rgba(31,42,34,.25)}.stub::before,.stub::after{display:none}.route b{font-size:26px}.pf{grid-template-columns:1fr}}
 
+/* Motion (Framer Motion) takes over these animations when it loads */
+.fm .boxin,.fm .intro>*,.fm .hot{animation:none}
+.fm .hot{opacity:1}
+.fm .boxin,.fm .intro>*,.fm .hot .dot,.fm .hot .lab{opacity:0}
+.fm .card,.fm .card.live{transition:none;opacity:0;transform:none}
+.fm .outro,.fm .outro.live{transition:none}
+.fm .pass,.fm .passwrap.on .pass{transition:none;transform:none}
+.fm .band h3,.fm .band .lede,.fm .groups>div,.fm .trio>div{opacity:0}
+.cnt-w{display:inline-block}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.hot{opacity:1}}
 </style>
 </head>
@@ -307,7 +316,10 @@ footer{border-top:1px solid var(--line);padding:26px clamp(18px,3vw,40px);displa
   <button class="pclose" type="button" id="pclose" aria-label="Kapat">×</button>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/motion@11.11.17/dist/motion.js"></script>
 <script>
+var M=(window.Motion&&!matchMedia('(prefers-reduced-motion: reduce)').matches)?window.Motion:null;
+if(M)document.documentElement.classList.add('fm');
 var WHATSAPP='';
 var S3='https://ai-thumbnails.s3.amazonaws.com/editor/f1dc3d8b-dca1-4bf9-be1c-818d551c4499/';
 var R=[
@@ -380,11 +392,11 @@ function goSeg(n){
   if(n<0||n>=SEG.length)return;
   from=cur||introPose();
   var s0=SEG[si];prevInt=(s0.k==='room'&&R[s0.i].img)?s0.i:-1;prevA=prevInt>=0?curIntA:0;
-  si=n;st=0;card.classList.remove('live');
+  si=n;st=0;cardOut();
   var s1=SEG[si];if(s1.k==='room')fill(s1.i);
-  intro.classList.toggle('gone',si!==0);outro.classList.toggle('live',false);
+  intro.classList.toggle('gone',si!==0);outroOut();
   [].forEach.call(rail.children,function(b,k){b.className=(s1.k==='room'&&k===s1.i)?'on':''});
-  $('cnt').textContent=s1.k==='room'?String(s1.i+1).padStart(2,'0')+' / '+String(N).padStart(2,'0'):s1.k==='outro'?'Son':'';
+  setCnt(s1.k==='room'?String(s1.i+1).padStart(2,'0')+' / '+String(N).padStart(2,'0'):s1.k==='outro'?'Son':'');
   ctl.classList.toggle('on',si>0);rail.classList.toggle('on',s1.k==='room');
   if(reduce)st=TR;
 }
@@ -403,12 +415,12 @@ function frame(now){
     hotA=from.s<1.3?1-cl(st/.8):0;
     intA=r.img?es(cl((st-TR+.25)/FI)):0;
     kb=1.12-.12*cl((st-TR)/(FI+HOLD));
-    if(st>TR+.2&&!card.classList.contains('live'))card.classList.add('live');
+    if(st>TR+.2&&!card.classList.contains('live'))cardIn();
     prog=(sg.i+cl(st/(TR+FI+HOLD)))/N;
     if(st>=TR+FI+HOLD)goSeg(si+1);
   } else {
     pose=flight(from,introPose(),cl(st/TR));hotA=cl((st-1.6)/.6);prog=1;
-    if(st>1.1&&!outro.classList.contains('live'))outro.classList.add('live');
+    if(st>1.1&&!outro.classList.contains('live'))outroIn();
   }
   cur=pose;curIntA=intA;apply(pose);
   hots.style.opacity=hotA;hots.style.pointerEvents=hotA>.5?'auto':'none';
@@ -443,18 +455,44 @@ addEventListener('resize',layout);
 
 /* preload + decode room photos so the first fade never stutters */
 imgs.forEach(function(im){if(im&&im.decode)im.decode().catch(function(){})});
-layout();setPlay(playing);fill(0);requestAnimationFrame(frame);
+layout();setPlay(playing);fill(0);requestAnimationFrame(frame);fmBoot();
+
+/* ---------- Motion (Framer Motion) layer ---------- */
+var SPR={type:'spring',stiffness:170,damping:22},EOUT=[.22,1,.36,1];
+function cardIn(){card.classList.add('live');if(!M)return;
+  M.animate(card,{opacity:[0,1],y:[48,0],scale:[.95,1]},SPR);
+  M.animate(card.querySelectorAll('.no,h2,p,.facts li,.gbtn'),{opacity:[0,1],y:[16,0]},{delay:M.stagger(.07,{startDelay:.12}),duration:.55,ease:EOUT})}
+function cardOut(){if(!card.classList.contains('live'))return;card.classList.remove('live');if(M)M.animate(card,{opacity:0,y:20,scale:.98},{duration:.3,ease:'easeIn'})}
+function outroIn(){outro.classList.add('live');if(!M)return;M.animate(outro,{opacity:1},{duration:.01});
+  M.animate(outro.children,{opacity:[0,1],y:[30,0]},{delay:M.stagger(.12),type:'spring',stiffness:140,damping:20})}
+function outroOut(){if(!outro.classList.contains('live'))return;outro.classList.remove('live');if(M)M.animate(outro,{opacity:0},{duration:.3})}
+function setCnt(v){var c=$('cnt');if(c.textContent===v)return;c.textContent=v;if(M&&v)M.animate(c,{opacity:[0,1],y:[10,0]},{type:'spring',stiffness:300,damping:20})}
+function fmBoot(){if(!M)return;
+  /* the building drops into place, then the title, then the room pins pop in one by one */
+  M.animate(document.querySelector('.boxin'),{opacity:[0,1],scale:[1.22,1],y:[-50,0]},{duration:2.3,ease:[.65,0,.25,1]});
+  M.animate(intro.children,{opacity:[0,1],y:[34,0]},{delay:M.stagger(.13,{startDelay:1.0}),type:'spring',stiffness:120,damping:18});
+  M.animate(document.querySelectorAll('.hot .dot'),{opacity:[0,1],scale:[0,1]},{delay:M.stagger(.12,{startDelay:1.7}),type:'spring',stiffness:420,damping:14});
+  M.animate(document.querySelectorAll('.hot .lab'),{opacity:[0,1],x:[-10,0]},{delay:M.stagger(.12,{startDelay:1.85}),type:'spring',stiffness:260,damping:20});
+  /* springy press feedback on every button */
+  document.querySelectorAll('.pill,.ctl button,.gbtn,.send,.rail button').forEach(function(b){
+    b.addEventListener('pointerdown',function(){M.animate(b,{scale:.92},{type:'spring',stiffness:600,damping:24})});
+    ['pointerup','pointerleave','pointercancel'].forEach(function(ev){b.addEventListener(ev,function(){M.animate(b,{scale:1},{type:'spring',stiffness:500,damping:15})})})});
+  /* sections below the tour rise in as they scroll into view */
+  document.querySelectorAll('section.band').forEach(function(sec){
+    M.inView(sec,function(){M.animate(sec.querySelectorAll('h3,.lede,.groups>div,.trio>div'),{opacity:[0,1],y:[36,0]},{delay:M.stagger(.09),type:'spring',stiffness:110,damping:20})},{amount:.25})});
+}
 
 /* visit pass */
 var pw=$('passwrap'),pf=$('pass');
 (function(){var g=$('gun'),d=new Date(),n=0,days=['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],mon=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
  while(n<5){d.setDate(d.getDate()+1);if(d.getDay()===0||d.getDay()===6)continue;var o=document.createElement('option');o.textContent=d.getDate()+' '+mon[d.getMonth()]+' '+days[d.getDay()];g.appendChild(o);n++}})();
 function grp(m){if(m===''||isNaN(+m))return '—';m=+m;if(m<=24)return 'Filizler';if(m<=36)return 'Fidanlar';if(m<=48)return 'Yapraklar';if(m<=66)return 'Çınarlar';return 'Yaş dışı'}
-function live(){$('sName').textContent=pf.cocuk.value.trim()||'—';$('sGroup').textContent=pf.ay.value?grp(pf.ay.value):'—';
- $('sWhen').textContent=pf.gun.value.split(' ').slice(0,2).join(' ')+' · '+pf.saat.value;
+var prevStub={};function pulse(id,v){var el=$(id);if(el.textContent!==v){el.textContent=v;if(M&&prevStub[id]!==undefined)M.animate(el,{scale:[1.12,1],color:['#2f7d4f','#1f2a22']},{type:'spring',stiffness:400,damping:18});prevStub[id]=v}}
+function live(){pulse('sName',pf.cocuk.value.trim()||'—');pulse('sGroup',pf.ay.value?grp(pf.ay.value):'—');
+ pulse('sWhen',pf.gun.value.split(' ').slice(0,2).join(' ')+' · '+pf.saat.value);
  $('pFrom').textContent=pf.veli.value.trim()?pf.veli.value.trim().split(' ')[0]+' ailesi':'Eviniz'}
 pf.addEventListener('input',live);pf.addEventListener('change',live);
-function openPass(){setPlay(false);pw.classList.add('on');pw.setAttribute('aria-hidden','false');live();setTimeout(function(){pf.veli.focus()},300)}
+function openPass(){setPlay(false);pw.classList.add('on');pw.setAttribute('aria-hidden','false');if(M)M.animate(pf,{opacity:[0,1],y:[70,0],rotate:[-2.5,0],scale:[.96,1]},{type:'spring',stiffness:170,damping:20});live();setTimeout(function(){pf.veli.focus()},300)}
 function closePass(){pw.classList.remove('on');pw.setAttribute('aria-hidden','true')}
 document.querySelectorAll('[data-pass]').forEach(function(b){b.addEventListener('click',openPass)});
 $('pclose').onclick=closePass;pw.addEventListener('click',function(e){if(e.target===pw)closePass()});
